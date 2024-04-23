@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ArticleService } from '../service/article.service';
-import { CreateArticleDto } from '../dto/article.dto';
+import { CreateArticleDto, UpdateArticleDto } from '../dto/article.dto';
 
 @Controller('article')
 export class ArticleController {
@@ -14,5 +14,10 @@ export class ArticleController {
   @Post()
   async create(@Body() payload: CreateArticleDto) {
     return await this.articleService.create(payload);
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: number, @Body() payload: UpdateArticleDto) {
+    return await this.articleService.update(+id, payload);
   }
 }
